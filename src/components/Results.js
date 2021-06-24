@@ -19,21 +19,33 @@ const Results = (props) => {
     }, [])
 
     return (
-        <div className="results-container">
+        <div className="results-stats">
             <div className="results-title">
                 <h1>Challenge Completed</h1>
                 <h2>Results</h2>
             </div>
 
-            <div className= "results-item">
-            <h2>Total Score: {score} / {questionamount*10}</h2>
+            <div className= "results-container">
+            <div className="results-item">
+            <h2>Total Score:</h2>
+            </div>
+            <div className="results-item">
+            <h2>{score}</h2>
+            </div>
+            </div>
+
+            
+
+             <div className=  "results-container">
+             <div className="results-item">
+            <h2>Time Left:</h2>
+            </div>
+            <div className="results-item">
+            <h2>{timer.mm} : {timer.ss}</h2>
+            </div>
+                 
              </div>
 
-             <div className= "results-item">
-            <h2>Time Left: {timer.mm} : {timer.ss}</h2>
-             </div>
-
-             grade {grade}
             
         </div>
     )

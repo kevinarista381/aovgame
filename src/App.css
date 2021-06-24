@@ -339,9 +339,18 @@ margin: 1%;
 
 .results-container{
   padding-top: 2%;
-
+  display: flex;
+  align-content: space-around;
+  justify-content: center;
+  border-bottom: goldenrod solid;
 }
 
 .results-item{
+  margin-bottom: 1%;
+  min-width: 40%; 
+}
 
+.results-title{
+  padding-top: 3%;
+  padding-bottom: 4%;
 }
