@@ -2,7 +2,7 @@ import React, {useEffect, useContext} from 'react'
 import corrsfx from '../sound/corrsound.mp3'
 import wrongsfx from '../sound/wrongsound.mp3'
 import { playsfxContext } from './Mainmenu'
-import $, { timers } from 'jquery'
+
 
 
  const Options = (props) => {
@@ -54,7 +54,7 @@ const reducetime= (time) =>{
         minimumIntegerDigits: 2,
         useGrouping: false
       })
-    props.settimer({mm: formattedmin, ss: formattedsec, secs: time})
+    props.settimer({...props.timer, mm: formattedmin, ss: formattedsec, secs: time})
     
 }
 

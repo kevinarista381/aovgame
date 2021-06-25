@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import axios from 'axios';
 import $ from 'jquery'
 
 export default function Quizmaker() {
@@ -49,26 +50,50 @@ const handlesubmit = async (e)=> {
     var o2 = $('#txtopt2').val();
     var o3 = $('#txtopt3').val();
     var o4 = $('#txtopt4').val();
-    const newquizdata = {question: q, corrans: newquiz.corrans, difficulty: newquiz.difficulty, opt1: o1, opt2: o2, opt3: o3, opt4: o4, media: media}
+   // const newquizdata = {question: q, corrans: newquiz.corrans, difficulty: newquiz.difficulty, opt1: o1, opt2: o2, opt3: o3, opt4: o4, media: media}
 
  
 
-console.log(newquizdata)
-  await   $.ajax({
-        method: "POST",
-        url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
-        data: newquizdata,
-        success: function (res) {
-        if (res === "200"){
-            window.alert("Quiz saved successfuly!")
-            $('#myform').trigger("reset");
-        } else{
-            window.alert("Sorry, quiz save error.")
-            console.log(res)
-        }            
+//console.log(newquizdata)
 
-        }
-    })
+const params = new URLSearchParams();
+params.append("question", q);
+params.append("corrans", newquiz.corrans);
+params.append("difficulty", newquiz.difficulty);
+params.append("opt1", o1);
+params.append("opt2", o2);
+params.append("opt3", o3);
+params.append("opt4", o4);
+params.append("media", media);
+
+const res = await axios({
+method: "POST",
+url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
+data: params})  
+
+if (res.data == 200){
+    window.alert("Quiz saved successfuly!")
+    $('#myform').trigger("reset");
+    return
+}
+window.alert("Sorry, quiz save error.")
+console.log(res.data)
+
+//   await   $.ajax({
+//         method: "POST",
+//         url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
+//         data: newquizdata,
+//         success: function (res) {
+//         if (res === "200"){
+           
+//             $('#myform').trigger("reset");
+//         } else{
+//             window.alert("Sorry, quiz save error.")
+//             console.log(res)
+//         }            
+
+//         }
+//     })
 
 
 }else{
@@ -175,7 +200,7 @@ console.log(newquizdata)
                      </div>
 
                      <div className="col">
-                         <input type="file" id="myfile"/>
+                         <input type="file" accept="image/*" id="myfile"/>
 
                      </div>
 

@@ -18,7 +18,7 @@ const Quizstats = (props) => {
             minimumIntegerDigits: 2,
             useGrouping: false
           })
-        settimer({mm: formattedmin, ss: formattedsec, secs: time})
+        settimer({...timer, mm: formattedmin, ss: formattedsec, secs: time})
         
     }
     

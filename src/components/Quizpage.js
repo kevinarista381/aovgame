@@ -23,7 +23,8 @@ const bgmtools = useContext(bgmtoolsContext)
 
 const [questionamount, setquestionamount] = useState(0)
 const initoption = [{ansid: 1, txt:""}, {ansid: 2, txt:""}, {ansid: 3, txt:""}, {ansid: 4, txt:""}]
-const [timer, settimer] = useState({mm: "", ss: "", secs : 60})
+const [timer, settimer] = useState({mm: "", ss: "", secs : 0, maxtime: 0})
+
 
 const [gamestarttoggle, setgamestarttoggle] = useState(false)
 const [quizzes, setquizzes] = useState([])
@@ -44,14 +45,30 @@ const [optiondata, setoptiondata] = useState(initoption)
 
 
 const starthandler = () => {
+    console.log(difficulty)
+    switch(difficulty){
+        case 1:
+            settimer({...timer, secs: 80, maxtime: 80})
+            break;
+        case 2:
+            settimer({...timer, secs: 60 , maxtime: 60})
+            break;
+        case 3:
+            settimer({...timer, secs: 40, maxtime: 40 })
+            break;
+        default:
+            window.alert("An error has occured.")
+            settimer({...timer, secs: 0, maxtime: 0})
+
+    }
     buttonpress(buttonsfx)
-    bgmtools.changebgm(2)
+    bgmtools.changebgm(2, true)
     
     settoggletimer(true)
     setgamestarttoggle(true)
-    var quizcontainer = document.getElementById("quizcontainer");
-        quizcontainer.classList.remove("quiz");
-        quizcontainer.classList.add("quiz-ingame");
+    // var quizcontainer = document.getElementById("quizcontainer");
+    //     quizcontainer.classList.remove("quiz");
+    //     quizcontainer.classList.add("quiz-ingame");
 
 }
 
@@ -92,7 +109,9 @@ function nextquestion(options){ //this only runs when the user clicked on Next
     
 }
 
-const assignquizzes = async(newitems) => { //puts the data objects fetched from database to a special array state called quizzzes
+const assignquizzes = (newitems) => { //puts the data objects fetched from database to a special array state called quizzzes
+    console.log(notfound)
+    if (notfound) return 
   newitems.forEach((newitem, i) => {
      quizzes[i] = newitem      
   });
@@ -128,11 +147,11 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
  const params = new URLSearchParams();
  params.append("diff", difficulty);
  const res = await axios({method: 'post', url: 'http://localhost/aov/aovgame/src/controllers/loader.php', data: params})
- if(res !== "404"){
+ if(res.data !== 404){
        
        
     var trueres = res.data // res.data is already a js object (rip json.parse), how convenient
-    console.log(trueres)
+    //console.log(trueres)
   
     setquestionamount(trueres.length)
     assignquizzes(trueres)
@@ -151,11 +170,11 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
 function renderquiz(quizbook, newnumber){ //this function prepares the quiz, it assigns the question and answer, the options, and the question number
    
 
-    if(indexes.length < quizbook.length-1){
-    var idx = Math.floor(Math.random() * (quizbook.length-1)); //randomized question id
+    if(indexes.length < quizbook.length){
+    var idx = Math.floor(Math.random() * (quizbook.length)); //randomized question id
 
     while(indexes.includes(idx)){
-        idx = Math.floor(Math.random() * (quizbook.length-1)) //make sure it picks a question that has not been asked before
+        idx = Math.floor(Math.random() * (quizbook.length)) //make sure it picks a question that has not been asked before
 
     }
     indexes.push(idx) //push asked question index to a special array state called indexes
@@ -198,7 +217,7 @@ useEffect(() => {
     !quizdone?
     
 
-    <div className="quiz column" id="quizcontainer">
+    <div className={gamestarttoggle ? "quiz-ingame column" : "quiz column"} id="quizcontainer">
         
 {
     timesup?
