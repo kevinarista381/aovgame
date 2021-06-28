@@ -25,7 +25,7 @@ $stmt = $conn->prepare($query);
 //     $safetext = 'null';
 //  }
 
- $qid= 10;
+ $qid= 11;
 
 $stmt->bind_param("isiisssss", $qid, $_POST['question'], $_POST['corrans'], $_POST['difficulty'], $_POST['opt1'], $_POST['opt2'], $_POST['opt3'], $_POST['opt4'], $safetext );
 

@@ -32,7 +32,7 @@ if($results->num_rows > 0){
    echo json_encode($jsonarr);
 
 }else{
-    echo "404";
+    echo "noquiz";
 }
 
 

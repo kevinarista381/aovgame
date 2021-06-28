@@ -146,11 +146,12 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
 
  const params = new URLSearchParams();
  params.append("diff", difficulty);
+ try{
  const res = await axios({method: 'post', url: 'http://localhost/aov/aovgame/src/controllers/loader.php', data: params})
- if(res.data !== 404){
-       
-       
-    var trueres = res.data // res.data is already a js object (rip json.parse), how convenient
+ let trueres = res.data // res.data is already a js object (rip json.parse), how convenient
+
+ if(typeof trueres === "object"){
+          
     //console.log(trueres)
   
     setquestionamount(trueres.length)
@@ -158,8 +159,28 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
     renderquiz(quizzes,  1)
 
    }else{
-       setnotfound(true)
+       throw("noquiz")
+       
    }
+ }catch(err){
+
+    if(err === "noquiz"){
+        setnotfound(true)
+        return
+    }
+        
+    switch(err.response.status){
+        case 404:
+            window.alert("No response from server")
+            break;
+        default:
+            window.alert("An error has occured.")
+        
+    }
+    
+ 
+
+ }
 
 
 }
@@ -278,7 +299,7 @@ useEffect(() => {
 
                      notfound?
                      
-                     <div>No Quizzes Available.</div>
+                     <div>No Quizzes Available yet for this difficulty/mode.</div>
 
                 :
 

@@ -1,10 +1,48 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import $ from 'jquery'
 
 export default function Quizmaker() {
 
 const [newquiz, setnewquiz] = useState({corrans: 0, difficulty: 0})
+const [imgsrc, setimgsrc] = useState("")
+const [fileok, setfileok] = useState(true)
+
+
+useEffect(() => {
+    if(imgsrc !== ""){
+    let el = document.getElementById("myimage")
+    checkimagesize(el) 
+    }   
+    return () => {
+      
+    }
+}, [imgsrc])
+
+const checkimagesize= (img) =>{
+let width = img.clientWidth
+let height = img.clientHeight
+
+if(width > 150 || height > 150){
+    setfileok(false)
+    setimgsrc("")
+    window.alert("Image size too large. Please upload image below 150x150 px")
+    return
+    
+}
+setfileok(true)
+
+}
+
+const showimg = async (e) =>{
+    let file = e.target.files[0]
+    if(typeof file == "undefined") return
+
+    let convertedfile = await toBase64(file)
+    //console.log(convertedfile)
+    let strsplit = convertedfile.split(",")
+    setimgsrc(strsplit[1])
+}
 
 
 const toBase64 = file => new Promise((resolve, reject) => {
@@ -14,7 +52,7 @@ const toBase64 = file => new Promise((resolve, reject) => {
     reader.onerror = error => reject(error);
 });
 
-function errorcheck(){
+function fieldcheck(){
     var q = $('#txtquestion').val();
     var o1 = $('#txtopt1').val();
     var o2 = $('#txtopt2').val();
@@ -33,7 +71,12 @@ function errorcheck(){
 const handlesubmit = async (e)=> {
     e.preventDefault();
 
- if(errorcheck()){
+if (!fileok){
+    window.alert("Please choose another image file below 150 x 150 px or leave it empty by cancelling out after clicking 'Choose File'.")
+    return
+}
+
+ if(fieldcheck()){
 
     
    const file = document.querySelector('#myfile').files[0];
@@ -43,14 +86,13 @@ const handlesubmit = async (e)=> {
    const res = await toBase64(file);
    const encodedfile = res.split(",")
    media = encodedfile[1]
-   console.log(encodedfile[1])
    }
     var q = $('#txtquestion').val();
     var o1 = $('#txtopt1').val();
     var o2 = $('#txtopt2').val();
     var o3 = $('#txtopt3').val();
     var o4 = $('#txtopt4').val();
-   // const newquizdata = {question: q, corrans: newquiz.corrans, difficulty: newquiz.difficulty, opt1: o1, opt2: o2, opt3: o3, opt4: o4, media: media}
+    const newquizdata = {question: q, corrans: newquiz.corrans, difficulty: newquiz.difficulty, opt1: o1, opt2: o2, opt3: o3, opt4: o4, media: media}
 
  
 
@@ -66,6 +108,8 @@ params.append("opt3", o3);
 params.append("opt4", o4);
 params.append("media", media);
 
+try{
+
 const res = await axios({
 method: "POST",
 url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
@@ -76,24 +120,14 @@ if (res.data == 200){
     $('#myform').trigger("reset");
     return
 }
-window.alert("Sorry, quiz save error.")
-console.log(res.data)
+throw("Sorry, quiz save error.")
 
-//   await   $.ajax({
-//         method: "POST",
-//         url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
-//         data: newquizdata,
-//         success: function (res) {
-//         if (res === "200"){
-           
-//             $('#myform').trigger("reset");
-//         } else{
-//             window.alert("Sorry, quiz save error.")
-//             console.log(res)
-//         }            
+}catch(err){
+    console.log("error caught: " + err)
+}
 
-//         }
-//     })
+
+
 
 
 }else{
@@ -200,7 +234,13 @@ console.log(res.data)
                      </div>
 
                      <div className="col">
-                         <input type="file" accept="image/*" id="myfile"/>
+                         <input type="file" accept="image/*" id="myfile" onChange={showimg}/>
+                         {
+                             imgsrc==="" ?
+                             null
+                             :
+                         <img src= {`data:image/png;base64,${imgsrc}`} id="myimage"/>
+                         }
 
                      </div>
 
