@@ -34,6 +34,7 @@ const [toggletimer, settoggletimer] = useState(false)
 const [timesup, settimesup] = useState(false)
 const [answercount, setanswercount] = useState(0)
 const [quizdone, setquizdone] = useState(false) 
+const [loading, setloading] = useState(true)
 
 
 
@@ -147,8 +148,10 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
  const params = new URLSearchParams();
  params.append("diff", difficulty);
  try{
- const res = await axios({method: 'post', url: 'http://localhost/aov/aovgame/src/controllers/loader.php', data: params})
+ const res = await axios({method: 'post', url: 'http://localhost:3001/loadquiz', data: {diff: difficulty}})
+setloading(false)
  let trueres = res.data // res.data is already a js object (rip json.parse), how convenient
+
 
  if(typeof trueres === "object"){
           
@@ -169,12 +172,12 @@ const loadquiz = async () => {  ///fetch all quiz data from database using post 
         return
     }
         
-    switch(err.response.status){
+    switch(err){
         case 404:
-            window.alert("No response from server")
+            window.alert("No response from server.")
             break;
         default:
-            window.alert("An error has occured.")
+            window.alert("An error has occured: " + err)
         
     }
     
@@ -294,8 +297,19 @@ useEffect(() => {
             </div>
 
                <div className="row-md-9 question">
+
+                 
                   
                  {
+
+                loading ?
+
+                <div>Loading... Please stand by.</div>
+
+
+                :
+                    
+                    
 
                      notfound?
                      
@@ -342,6 +356,11 @@ useEffect(() => {
                />               
               </div>
                 
+                :
+
+                loading ?
+                null
+
                 :
 
                 <div className="row-md-3 options menubuttons">

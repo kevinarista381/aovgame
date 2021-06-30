@@ -93,41 +93,55 @@ if (!fileok){
     var o3 = $('#txtopt3').val();
     var o4 = $('#txtopt4').val();
     const newquizdata = {question: q, corrans: newquiz.corrans, difficulty: newquiz.difficulty, opt1: o1, opt2: o2, opt3: o3, opt4: o4, media: media}
-
+   
  
 
 //console.log(newquizdata)
 
-const params = new URLSearchParams();
-params.append("question", q);
-params.append("corrans", newquiz.corrans);
-params.append("difficulty", newquiz.difficulty);
-params.append("opt1", o1);
-params.append("opt2", o2);
-params.append("opt3", o3);
-params.append("opt4", o4);
-params.append("media", media);
+// const params = new URLSearchParams();  //use these if you want to send data to the submitter.php
+// params.append("question", q);
+// params.append("corrans", newquiz.corrans);
+// params.append("difficulty", newquiz.difficulty);
+// params.append("opt1", o1);
+// params.append("opt2", o2);
+// params.append("opt3", o3);
+// params.append("opt4", o4);
+// params.append("media", media);
 
 try{
 
 const res = await axios({
 method: "POST",
-url: "http://localhost/aov/aovgame/src/controllers/submitter.php",
-data: params})  
+url: "http://localhost:3001/savequiz",
+data: newquizdata})  
 
-if (res.data == 200){
-    window.alert("Quiz saved successfuly!")
-    $('#myform').trigger("reset");
-    return
-}
-throw("Sorry, quiz save error.")
+
+ //console.log(res)
+
+if (res.status == 200){
+     window.alert("Quiz saved successfuly!")
+     $('#myform').trigger("reset");
+     return
+ }
+ throw(res.status)
 
 }catch(err){
-    console.log("error caught: " + err)
+    if (err.status = 404){
+        window.alert("Error connecting to the server. Please check your connection or the server might be offline.")
+        return
+    }
+    switch(err){
+        case 404:
+            window.alert("Error connecting to the database. We'll fix it soon.")
+            break;
+        case 500:
+            window.alert("An error occured on the server. We'll fix it soon.")
+            break;
+        default:
+            window.alert("An error has occured. We'll fix it soon.")
+            
+    }
 }
-
-
-
 
 
 }else{
