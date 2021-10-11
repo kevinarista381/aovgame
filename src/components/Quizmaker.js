@@ -40,8 +40,8 @@ const showimg = async (e) =>{
 
     let convertedfile = await toBase64(file)
     //console.log(convertedfile)
-    let strsplit = convertedfile.split(",")
-    setimgsrc(strsplit[1])
+   
+    setimgsrc(convertedfile)
 }
 
 
@@ -157,10 +157,26 @@ if (res.status == 200){
             <div><h1>QUIZ MAKER</h1></div>
             <p>Create your own AOV quiz here</p>
             <form id="myform">
-                <div className="row">
+                <div className="row formcomp">
                     <div className="col">Difficulty:</div>
-                    <div className="col">
-                        <div className="row">
+                    <div className="col radiobtns">
+
+                    <div className="custom-control custom-radio">
+                    <input type="radio" onClick={()=> setnewquiz({...newquiz, difficulty: 1})} className="custom-control-input" id="difopt1" name="diffrad" value="1"/>
+                    <label className="quizmaker-difficulty custom-control-label" htmlFor="difopt1">Apprentice</label>
+                    </div>
+
+                    <div className="custom-control custom-radio">
+                    <input type="radio" onClick={()=> setnewquiz({...newquiz, difficulty: 2})} className="custom-control-input" id="difopt2" name="diffrad" value="2"/>
+                    <label className="quizmaker-difficulty custom-control-label" htmlFor="difopt2">Seasoned</label>
+                    </div>
+
+                    <div className="custom-control custom-radio">
+                    <input type="radio" onClick={()=> setnewquiz({...newquiz, difficulty: 3})} className="custom-control-input" id="difopt3" name="diffrad" value="3"/>
+                    <label className="quizmaker-difficulty custom-control-label" htmlFor="difopt3">Legendary</label>
+                    </div>
+
+                        {/* <div className="row">    
                         <input type="radio" onClick={()=>setnewquiz({...newquiz, difficulty: 1})} name="difficultyrad" value="1"/>
                         <div>Apprentice</div>
                         </div>
@@ -171,76 +187,63 @@ if (res.status == 200){
                         <div className="row">
                         <input type="radio" onClick={()=>setnewquiz({...newquiz, difficulty: 3})} name="difficultyrad" value="3"/>
                         <div>Legendary</div>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
 
-                <div className="row">
-                <div className="col">Question:</div>
-                    <div className="col">
-                        <div className="row">
+                <div className="row quizmaker-question formcomp">
+                <div className="col-md-3">Question:</div>
+                    <div className="col-md-3 txtarea">
+                      
                         <textarea name="txtquestion" id="txtquestion" rows="4" cols="50" placeholder="Type the question here"/>
 
-                       </div>
+                      
                     </div>
 
                 </div>
 
-                <div className="row">
-                    <div className="col">Answer Options:</div>
+                <div className="row quizmaker-answers formcomp">
+                    <div className="col answeroptions-label">Answer Options:</div>
 
 
-                    <div className="col">
-
-                    <div className="row formcomp">
-
-                        <div className="column">
+                    <div className="col radiobtns">
 
                     <div className="custom-control custom-radio">
-                   
                     <input type="radio" onClick={()=> setnewquiz({...newquiz, corrans: 1})} className="custom-control-input" id="opt1" name="corransrad" value="1"/>
-                    <label className="custom-control-label" for="opt1">Option 1:  <input type="text" id="txtopt1"/></label>
+                    <label className="custom-control-label" htmlFor="opt1">Option 1:  <input type="text" id="txtopt1" className={` ${newquiz.corrans === 1 ? "greentext" : null}`}/></label>
                     </div>
                     
 
                     <div className="custom-control custom-radio">
                     <input type="radio" onClick={()=> setnewquiz({...newquiz, corrans: 2})} className="custom-control-input" id="opt2" name="corransrad" value="2"/>
-                    <label className="custom-control-label" for="opt2">Option 2:  <input type="text" id="txtopt2"/></label>
+                    <label className="custom-control-label"  htmlFor="opt2">Option 2:  <input type="text" id="txtopt2" className={` ${newquiz.corrans === 2 ? "greentext" : null}`}/></label>
                     </div>
 
                     <div className="custom-control custom-radio">
                     <input type="radio" onClick={()=> setnewquiz({...newquiz, corrans: 3})} className="custom-control-input" id="opt3" name="corransrad" value="3"/>
-                    <label className="custom-control-label" for="opt3">Option 3:  <input type="text" id="txtopt3"/></label>
+                    <label className="custom-control-label" htmlFor="opt3">Option 3:  <input type="text" id="txtopt3" className={` ${newquiz.corrans === 3 ? "greentext" : null}`}/></label>
                     </div>
 
                     <div className="custom-control custom-radio">
-                    <input type="radio" onClick={()=> setnewquiz({...newquiz, corrans: 4})} className="custom-control-input" id="opt4" name="corransrad" value="4"/>
-                    <label className="custom-control-label" for="opt4">Option 4:  <input type="text" id="txtopt4"/></label>
-                    </div>
-
-                        </div>
-                        
-                   
-
-                   </div>                   
-
-                </div>
+                    <input type="radio" onClick={()=> setnewquiz({...newquiz, corrans: 4})}className="custom-control-input" id="opt4" name="corransrad" value="4"/>
+                    <label className="custom-control-label"  htmlFor="opt4">Option 4:  <input type="text" id="txtopt4" className={` ${newquiz.corrans === 4 ? "greentext" : null}`}/></label>
+                    </div>                                   
+                 </div>
                 
-                <div className="col corransdiv">
+                <div className="col corransdiv greentext">
                    <div className="corransnotif"> {newquiz.corrans === 1 ?<b>Correct Answer.</b> : <div className="invisible">.</div> }</div>
                     <div className="corransnotif">{newquiz.corrans === 2 ?<b>Correct Answer.</b> : <div className="invisible">.</div> }</div>
                     <div className="corransnotif">{newquiz.corrans === 3 ?<b>Correct Answer.</b> : <div className="invisible">.</div> }</div>
                     <div className="corransnotif">{newquiz.corrans === 4 ?<b>Correct Answer.</b> : <div className="invisible">.</div> }</div>
-                </div>
+                </div>   
+                
+                         
+                        
+             </div>   
+             <div>*Choose one option to be the correct answer</div>
 
                 
-
-
-                  
-                        
-                 </div>   
-                 <div className="row difficulties">*Choose one option to be the correct answer</div>
 
                  <div className = "row">
                      <div className= "col">
@@ -253,7 +256,7 @@ if (res.status == 200){
                              imgsrc==="" ?
                              null
                              :
-                         <img src= {`data:image/png;base64,${imgsrc}`} id="myimage"/>
+                         <img src= {imgsrc} id="myimage"/>
                          }
 
                      </div>
@@ -262,18 +265,20 @@ if (res.status == 200){
         
 
                 
-                <div className="row">
+            
                   
-                    <div className="difficulties">
-                        <div className="row">
-                        <div><button onClick= {(e) => handlesubmit(e)} className="btn btn-primary" name="submitbtn">Add Quiz</button></div>
+                    <div className="quizmaker-container menubuttons">
+                       
+                        <div className="quizmaker-submitbtn">
+                            <button onClick= {(e) => handlesubmit(e)} className="goldbtn" name="submitbtn">Submit</button>
                         </div>
-                        <div className="row">
-                        <button className="btn btn-secondary">Preview</button>
+                        
+                        <div className="quizmaker-submitbtn">
+                        <button className="bluebtn">Preview</button>
                         </div>
+                       
                     </div>
 
-                </div>
 
 
                

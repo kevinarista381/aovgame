@@ -1,4 +1,5 @@
 import React from 'react'
+import { CSSTransition } from 'react-transition-group';
 import Quizpage from './Quizpage'
 import {useState, useEffect, useRef} from 'react'
 import Quizmaker from './Quizmaker';
@@ -203,12 +204,21 @@ null
 
                 <div className="container">
                 <div className= "headingtxt">Select Difficulty</div>
-                <div className= "row difficulties">
+
+                <CSSTransition
+                    in = {true}
+                    appear = {true}
+                    timeout = {300}
+                    classNames= "fade"
+                    >
+                <div className= "difficulties">
+                    
                     
                     <div className="diffbuttons" onClick={() => clickhandler(1)}>
                     <div> <img src={apprentice}/> </div>
                      <div className="normaltxt" >Apprentice</div>
                      </div>
+                     
 
                      <div className="diffbuttons" onClick={() => clickhandler(2)}>
                     <div> <img src={seasoned}/> </div>
@@ -222,8 +232,10 @@ null
 
             
                  </div>  
+                 </CSSTransition>
 
                 </div>
+               
 
                 :
                 <playsfxContext.Provider value = {playbuttonpress}>

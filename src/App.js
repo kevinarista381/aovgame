@@ -2,8 +2,8 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './css/bootstrap.min.css'
-import Banphase from './components/banphase';
-import Quizpage from './components/Quizpage';
+import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql, HttpLink, from} from '@apollo/client';
+import {onError} from '@apollo/client/link/error'
 import Mainmenu from './components/Mainmenu';
 
 

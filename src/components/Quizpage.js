@@ -364,7 +364,14 @@ useEffect(() => {
                 :
 
                 <div className="row-md-3 options menubuttons">
-               <button className="bluebtn" onClick= {() => starthandler() }>Begin</button> 
+                    <div className="col">
+                    <button className="goldbtn" onClick= {() => starthandler() }>Begin</button> 
+                    </div>
+
+                    <div className="col">
+                    <button className="bluebtn">Back</button> 
+                    </div>
+               
                </div>
                  }
             

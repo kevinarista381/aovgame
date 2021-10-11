@@ -168,9 +168,7 @@ border-image: url(img/ui/goldframe.png) 30 round;
 
 }
 
-.formcomp{
-  margin: 5%;
-}
+
 
 .corransdiv{
   padding-top: 1.5%;
@@ -301,11 +299,10 @@ button:active {
   align-items: center;
 }
 .diffbuttons{
-  flex-grow: 3;
   border: white solid;
-  margin: 4.16%;
+  min-width: 25%;
   cursor: pointer;
-  background: linear-gradient(to right, rgba(255, 0 , 0, 0), rgba(255, 242, 242, 124));
+  background: linear-gradient( rgba(255, 242, 242, 124), rgba(255, 0, 0, 0));
  
 }
 
@@ -354,3 +351,233 @@ margin: 1%;
   padding-top: 3%;
   padding-bottom: 4%;
 }
+
+
+.quizmaker-container{
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+}
+
+
+.quizmaker-submitbtn{
+  flex-grow: 2;
+}
+
+.quizmaker-answers{
+ padding-left: 8%;
+ padding-bottom: 2%;
+}
+
+.radiobtns{
+  margin: 1.2%;
+  
+}
+
+.quizmaker-question{
+  padding-bottom: 2%;
+  padding-left: 14%;
+ }
+
+
+ .quizmaker-difficulty{
+   float: left;
+   margin-left: 2%;
+   margin-bottom: 1%;
+ }
+
+ .custom-radio{
+   padding-bottom: 1%;
+ }
+
+ .txtarea{
+   margin-left: 4%;
+ }
+
+.answeroptions-label{
+  padding-top: 1%;
+}
+
+.greentext{
+  color: #28d15d;
+}
+
+.formcomp{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  
+
+}
+
+
+
+
+
+
+
+
+* DEMO STYLES */
+.nav {
+  padding: 30px 0;
+  background-color: #222;
+}
+.nav a {
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+  margin: 0 15px;
+  padding: 10px;
+  border: 1px rgba(255,255,255,0.5) solid;
+  transition: all 0.3s linear;
+  text-decoration: none;
+  color: white;
+}
+.nav a.active {
+  background-color: #61DAFB;
+  color: #222;
+}
+section {
+  padding: 20px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* appear - on page load */
+.fade-appear {
+    opacity: 0;
+    z-index: 1;
+}
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms linear;
+}
+
+/* enter */
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 5000ms linear 5000ms;
+}
+
+/* exit */
+.fade-exit {
+    opacity: 1;
+}
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 5000ms linear;
+}
+.fade-exit-done {
+  opacity: 0;
+}
+
+/* slide enter */
+.slide-enter {
+  opacity: 0;
+  transform: scale(0.97) translateY(5px);
+  z-index: 1;
+}
+.slide-enter.slide-enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: opacity 3000ms linear 1000ms, transform 3000ms ease-in-out 1000ms;
+}
+
+/* slide exit */
+.slide-exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    
+}
+.slide-exit.slide-exit-active {
+    opacity: 0;
+    transform: scale(0.97) translateY(5px);
+    transition: opacity 1500ms linear, transform 1500ms ease-out;
+}
+.slide-exit-done {
+  opacity: 0;
+}
+
+/* Card */
+.card-container {
+  position: relative;
+  max-width: 226px;
+  margin: 0 auto;
+}
+
+.card {
+  border: 3px #f3f3f3 solid;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+  cursor: pointer;
+  background-color: #f3f3f3;
+  padding: 10px;
+  max-width: 220px;
+  text-align: left;
+  margin: 0 auto;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.card:hover {
+  background-color: #f3f3f3;
+  border-color: #f3f3f3;
+}
+.card img {
+  max-width: calc(100%);
+  margin: 0 auto;
+  display: block;
+}
+.card .index {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  line-height: 20px;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  padding: 0 10px;
+}
+.card .price {
+  margin: 0;
+  padding: 10px 0;
+  font-weight: bold;
+}
+.card .details {
+  position: relative;
+}
+.card .features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.card .features li {
+  padding-left: 24px;
+  margin-right: 10px;
+  display: inline-block;
+}
+.card .features li span {
+  display: none;
+}
+.card .features li.icon-bed {
+
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+.card .features li.icon-bath {
+
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+.card .features li.icon-car {
+
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+}
+
